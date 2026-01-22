@@ -28,6 +28,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install Python dependencies
+        run: pip install requests
+
       - name: Run registry update script
         run: |
           python .github/scripts/update_registry.py

@@ -31,6 +31,9 @@ on:
         with:
           python-version: '3.x'
 
+      - name: Install Python dependencies
+        run: pip install requests
+
       - name: Run removal script
         run: |
           python .github/scripts/remove_from_registry.py
