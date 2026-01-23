@@ -13,8 +13,14 @@ GITHUB_REPO = os.environ.get('GITHUB_REPOSITORY')  # e.g., 'UPENN-PNGC/pngc-part
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/issues"
 
+if not GITHUB_TOKEN:
+    raise ValueError("GITHUB_TOKEN environment variable is not set")
+
 def get_most_recent_registration_issue():
-    headers = {'Authorization': f'token {GITHUB_TOKEN}'}
+    headers = {
+        'Authorization': f'token {GITHUB_TOKEN}', 
+        'Accept': 'application/vnd.github+json'
+    }
     params = {
         'state': 'closed',
         'labels': 'registration',
