@@ -37,6 +37,7 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        id: cpr
         with:
           token: ${{ steps.app-token.outputs.token }}
           commit-message: "chore: remove repository from registry table in README.md"
@@ -44,4 +45,20 @@ jobs:
           title: "Remove repository from registry table in README.md"
           body: "Automated registry removal for approved removal."
           labels: auto-merge
-          auto-merge: true
+
+      - name: Enable auto-merge for PR
+        if: steps.cpr.outputs.pull-request-url != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Number('${{ steps.cpr.outputs.pull-request-number }}')
+            });
+            await github.rest.pulls.enableAutoMerge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.data.number,
+              merge_method: 'squash'
+            });
