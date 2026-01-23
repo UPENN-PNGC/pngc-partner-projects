@@ -9,6 +9,8 @@ This registry helps PNGC-affiliated labs share and discover computational tools,
 
 To submit a new partner project, see the [registration guide](CONTRIBUTING.md#how-to-register-your-repository). After submission, a maintainer will review your entry.
 
+**Maintainers**: Please follow instructions in the [maintainer guide](MAINTAINER_GUIDE.md) to approve registration and removal requests.
+
 **Note:** The registry table is updated automatically from approved submissions. Please do not edit the table manually.
 
 ## Registry
