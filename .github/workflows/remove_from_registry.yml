@@ -1,13 +1,10 @@
-on:
-jobs:
-
 name: Remove Repository from Registry
 
 on:
   issues:
     types: [closed]
 
-
+jobs:
   remove-from-registry:
     if: |
       contains(github.event.issue.labels.*.name, 'approved') && contains(github.event.issue.labels.*.name, 'removal')
