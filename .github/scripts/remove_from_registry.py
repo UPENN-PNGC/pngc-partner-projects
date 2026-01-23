@@ -33,11 +33,16 @@ def get_most_recent_removal_issue():
 
 
 def extract_repo_url_from_body(body):
-    # Assumes the form field is 'Repository Link:' or similar
-    match = re.search(r'Repository Link: ?(https?://github.com/\S+)', body)
+    # Match markdown heading style for 'Repository Link' followed by the URL
+    pattern = r"### Repository Link\s*\n+([^#\n][\s\S]*?)(?=\n### |\Z)"
+    match = re.search(pattern, body, re.IGNORECASE)
     if match:
-        return match.group(1).strip()
-    # fallback: look for any github.com URL
+        value = match.group(1).strip()
+        # Find the first github.com URL in the value
+        url_match = re.search(r'(https?://github.com/\S+)', value)
+        if url_match:
+            return url_match.group(1).strip()
+    # fallback: look for any github.com URL in the whole body
     match = re.search(r'(https?://github.com/\S+)', body)
     if match:
         return match.group(1).strip()

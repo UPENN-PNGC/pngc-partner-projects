@@ -38,10 +38,15 @@ def get_most_recent_registration_issue():
 def parse_issue_body(body):
     # Map form fields to table columns, including Funding and Additional Info
     def extract(field):
-        pattern = rf"{field}: ?(.+?)(?:\n|$)"
-        match = re.search(pattern, body, re.IGNORECASE | re.DOTALL)
+        # Match '### Field Name' followed by blank lines, then capture until next heading or end
+        pattern = rf"### {re.escape(field)}\s*\n+([^#\n][\s\S]*?)(?=\n### |\Z)"
+        match = re.search(pattern, body, re.IGNORECASE)
         if match:
-            return match.group(1).strip()
+            value = match.group(1).strip()
+            # Remove markdown placeholder for no response
+            if value.strip() in ('_No response_', '-'): 
+                return ''
+            return value
         return ''
 
     lab = extract('Lab / Group Name')
