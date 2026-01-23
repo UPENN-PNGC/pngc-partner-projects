@@ -45,10 +45,6 @@ Please select the single most relevant category from this list:
 
 *If you need a category that's not listed, please suggest it in your registration issue.*
 
-## Category
-
-Use a category from the approved list in README.md. If you need a new category, suggest it in your registration issue with justification.
-
 ## How to Request Removal of a Repository
 
 If you would like to request the removal of a project from the PNGC registry:
